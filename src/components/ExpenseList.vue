@@ -1,8 +1,15 @@
 <template>
-        <div></div>
-      <div class=" p-2 text-3xl w-1/2 font-extrabold">ખર્ચ ની યાદી : </div>
-
-    <div class="w-full mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <div class="w-full h-1/4  flex items-center justify-around">
+            <div class="w-1/5 h-3/4 shadow-2xl rounded-2xl  bg-yellow-100 "> 
+                <span></span>
+                <span></span>
+            </div>
+            <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl bg-green-100"></div>
+            <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl  bg-blue-100"></div>
+        </div>
+    <div class="w-full h-1/6 bg-black "></div>    
+    <div class=" p-2 text-3xl w-1/2 font-extrabold">ખર્ચ ની યાદી : </div>
+    <div class="w-full mx-auto p-6 bg-white shadow-lg rounded-lg ">
       
       <!-- Display the expenses in a table -->
       <table class="table-auto w-full text-left border-collapse">

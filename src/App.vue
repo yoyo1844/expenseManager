@@ -27,7 +27,7 @@
     </nav>
 
     <!-- Router View (Main Content) -->
-    <div class="flex-grow p-6">
+    <div class="flex-grow">
       <router-view></router-view>
     </div>
   </div>

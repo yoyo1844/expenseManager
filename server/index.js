@@ -18,15 +18,18 @@ mongoose.connect('mongodb://localhost:27017/kharchDB')
 const KharchSchema = new mongoose.Schema({
   amount: {
     type: Number,
-    required: true,
+    
   },
   description: {
     type: String,
-    required: true,
+   
   },
   shopName: {
     type: String,
-    required: true,
+    
+  },
+  shopMobileNumber: {
+    type : Number,
   },
   category: {
     type: String,
@@ -43,7 +46,7 @@ const Kharch = mongoose.model('Kharch', KharchSchema);
 
 // POST endpoint to create a new expense (kharch)
 app.post('/api/kharch', async (req, res) => {
-  const { amount, description, shopName, category } = req.body;
+  const { amount, description, shopName, category,shopMobileNumber } = req.body;
 
   // Validate the input
   if (!amount || !description || !shopName || !category) {
@@ -57,6 +60,7 @@ app.post('/api/kharch', async (req, res) => {
       description,
       shopName,
       category,
+      shopMobileNumber
     });
 
     // Save the expense (kharch) to MongoDB
@@ -83,6 +87,34 @@ app.get('/api/kharch', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+app.post('/api/deleteKharch', async (req, res) => {
+  try {
+    // Get the id from the query parameters
+    const id = req.query.id;
+
+    // Check if the id is provided
+    if (!id) {
+      return res.status(400).json({ error: 'No ID provided' });
+    }
+
+    // Use the Mongoose model to delete the document by _id
+    const deletedRecord = await Kharch.findByIdAndDelete(id);  // Replace 'KharchModel' with your actual Mongoose model
+
+    if (!deletedRecord) {
+      // If no document is found, return a 404 error
+      return res.status(404).json({ error: 'Record not found' });
+    }
+
+    // If deletion is successful, send a success response
+    res.json({ message: 'Record deleted successfully', deletedRecord });
+
+  } catch (err) {
+    console.error('delErr', err);
+    res.status(500).json({ error: 'An error occurred while deleting the record' });
+  }
+});
+
 
 // Start the server
 app.listen(3000, () => {

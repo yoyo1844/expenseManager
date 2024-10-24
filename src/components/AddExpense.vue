@@ -3,8 +3,8 @@
       <h1 class="text-2xl font-bold mb-6 text-gray-800">અહિ ખર્ચ ઉમેરો</h1>
   
       <!-- Amount Input -->
-      <div class="mb-4">
-        <label for="rupees" class="block text-gray-700 font-medium mb-2">Rupiya</label>
+      <div class="mb-9">
+        <label for="rupees" class="block text-gray-700 font-medium mb-2">રૂપિયા</label>
         <input 
           type="number" 
           id="rupees" 
@@ -14,8 +14,8 @@
       </div>
   
       <!-- Description Input -->
-      <div class="mb-4">
-        <label for="description" class="block text-gray-700 font-medium mb-2">Description / vastu</label>
+      <div class="mb-9">
+        <label for="description" class="block text-gray-700 font-medium mb-2">વસ્તુ નુ નામ</label>
         <input 
           type="text" 
           id="description" 
@@ -25,8 +25,9 @@
       </div>
   
       <!-- Shop Name Input -->
-      <div class="mb-4">
-        <label for="shopName" class="block text-gray-700 font-medium mb-2 w-1/3">Shop Name / owner name</label>
+      <div class="flex w-full " > 
+      <div class="mb-9 w-1/3">
+        <label for="shopName" class="block text-gray-700 font-medium mb-2 w-1/3">દુકાન નુ નામ </label>
         <input 
           type="text" 
           id="shopName" 
@@ -34,10 +35,22 @@
           class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
       </div>
+
+      <!-- shop mobile number -->
+       <div class="mb-9 w-1/3 ml-16">
+        <label for="shopMobileNumber" class="block text-gray-700 font-medium mb-2">દુકાન નો નંબર</label>
+        <input 
+          type="number" 
+          id="shopMobileNumber" 
+          v-model="kharchObj.shopMobileNumber" 
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+      </div>
+      </div>
   
       <!-- Category Dropdown -->
-      <div class="mb-4">
-        <label for="category" class="block text-gray-700 font-medium mb-2">Category</label>
+      <div class="mb-28">
+        <label for="category" class="block text-gray-700 font-medium mb-2">કેટેગરી</label>
         <multiselect
           v-model="kharchObj.category"
           :options="categoryOptions"
@@ -54,7 +67,7 @@
           class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
           @click="addKharcho"
         >
-          Add Expense
+          ખર્ચ ઉમેરો
         </button>
       </div>
     </div>
@@ -76,6 +89,7 @@ import Multiselect from 'vue-multiselect'
           description: '',
           shopName: '',
           category: '',
+          shopMobileNumber : null
         },
        categoryOptions : [
           { label: 'Gold', value: 'G' },
@@ -86,6 +100,14 @@ import Multiselect from 'vue-multiselect'
       };
     },
     methods: {
+      clearKharchObj(){
+          this.kharchObj =  {
+          amount: null,
+          description: '',
+          shopName: '',
+          category: '',
+        }
+      },
   async addKharcho() {
     try {
       // Create a copy of kharchObj but replace category with only its value
@@ -96,6 +118,7 @@ import Multiselect from 'vue-multiselect'
 
       const res = await axios.post('http://localhost:3000/api/kharch', kharchData);
       console.log(res);
+      this.clearKharchObj()
     } catch (err) {
       console.log(err);
     }

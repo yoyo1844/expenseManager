@@ -1,25 +1,25 @@
 <template>
   <div class="w-full h-1/4  flex items-center justify-around">
     <!-- Gold Category -->
-    <div class="w-1/5 h-3/4 shadow-2xl rounded-2xl bg-yellow-100 flex flex-col items-center justify-center text-center">
+    <div class="w-1/5 h-3/4 shadow-2xl rounded-2xl bg-yellow-100 flex flex-col items-center justify-center text-center transition-transform transform hover:scale-105 hover:bg-yellow-200">
       <div class="text-lg font-bold text-gray-700">ગોલ્ડ ટોટલ</div>
       <div class="text-3xl font-extrabold text-yellow-700 mt-2">₹ {{ totalGold }}</div>
     </div>
 
     <!-- Jamanvar Category -->
-    <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl bg-green-100 flex flex-col items-center justify-center text-center">
+    <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl bg-green-100 flex flex-col items-center justify-center text-center transition-transform transform hover:scale-105 hover:bg-green-200">
       <div class="text-lg font-bold text-gray-700">જમણવાર ટોટલ</div>
       <div class="text-3xl font-extrabold text-green-700 mt-2">₹ {{ totalJamanvar }}</div>
     </div>
 
     <!-- Kapda Category -->
-    <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl bg-blue-100 flex flex-col items-center justify-center text-center">
+    <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl bg-blue-100 flex flex-col items-center justify-center text-center transition-transform transform hover:scale-105 hover:bg-blue-200">
       <div class="text-lg font-bold text-gray-700">કપડા ટોટલ</div>
       <div class="text-3xl font-extrabold text-blue-700 mt-2">₹ {{ totalKapda }}</div>
     </div>
 
     <!-- Other Category -->
-    <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl bg-red-100 flex flex-col items-center justify-center text-center">
+    <div class="w-1/5 h-3/4 rounded-2xl shadow-2xl bg-red-100 flex flex-col items-center justify-center text-center transition-transform transform hover:scale-105 hover:bg-red-200">
       <div class="text-lg font-bold text-gray-700">અન્ય ટોટલ</div>
       <div class="text-3xl font-extrabold text-red-700 mt-2">₹ {{ totalOther }}</div>
     </div>
@@ -81,6 +81,7 @@ export default {
   async mounted() {
     this.getKharchas()
   },
+
   methods : {
     async getKharchas(){
             try {
@@ -113,11 +114,19 @@ export default {
       console.error('Error fetching expenses:', error);
     }
     },
+    clearTotals(){
+      this.totalGold = 0
+      this.totalJamanvar = 0
+      this.totalKapda = 0
+      this.totalOther = 0
+      this.subtotal = 0
+    },
      async deleteKharch(id){
       try{
 
         const res= await axios.post(`http://localhost:3000/api/deleteKharch?id=${id}`)
         console.log(res)
+        this.clearTotals()
         this.getKharchas()
       }catch(err){
         console.log(err)
@@ -152,5 +161,9 @@ td, th {
 }
 .font-extrabold {
   font-weight: 800;
+}
+td, th {
+  padding: 0.75rem;
+  border: 1px solid #ddd; /* Add this line for outlines */
 }
 </style>
